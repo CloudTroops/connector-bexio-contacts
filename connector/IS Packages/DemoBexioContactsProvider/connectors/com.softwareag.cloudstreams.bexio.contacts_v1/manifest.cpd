@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Connector-Key: com.softwareag.cloudstreams.bexio.contacts_v1
+Connector-Name: Bexio Contacts
+Connector-Version: 2.0
+Connector-Handler: com.softwareag.cloudstreams.metadata.handler.rest.Res
+ tConnectorMetadataHandler
+Connector-State: Enabled
+Connector-Bundle-Vendor: NRAM
+Connector-Bundle-Version: 1.0
+Connector-Group: Bexio
+Connector-Group-ID: com.softwareag.cloudstreams.bexio.contacts
+Connector-Group-Version: 1
+Project: 
+
+Name: User-Defined
+Application-Version: 2.0
+Connector-Type: Custom
+applicationImageID: 
+

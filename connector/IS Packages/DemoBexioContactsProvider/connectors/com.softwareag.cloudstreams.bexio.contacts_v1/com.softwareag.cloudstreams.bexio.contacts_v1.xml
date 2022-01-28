@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rest-connector xmlns="http://www.softwareag.com/cloudstreams/metadata/handler/model" id="com.softwareag.cloudstreams.bexio.contacts_v1" version="2.0" group="Bexio" name="BexioContacts" displayName="Bexio Contacts">
+    <description></description>
+    <connections>
+        <connection type="sagcloud" name="SAG_Connection" displayName="SAG_Connection">
+            <groups>
+                <group type="connection" name="connection" displayName="Connection">
+                    <description>Define the required connection configurations to initiate communication with the SaaS provider.</description>
+                    <fields>
+                        <field isRequired="true" isEncrypted="false" isHidden="false" isArray="false" defaultValue="https://api.bexio.com" name="cn.providerUrl" displayName="Server URL">
+                            <description>The native provider endpoint target for the connection configuration</description>
+                        </field>
+                    </fields>
+                </group>
+                <group type="oauth_v20" name="oauth_v20" displayName="OAuth V2.0">
+                    <description>Define configurations needed for the OAuth version 2.0 authentication scheme.</description>
+                    <fields/>
+                </group>
+            </groups>
+        </connection>
+    </connections>
+    <services>
+        <service xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RESTServiceType" endpoint="${cn.providerUrl}" name="contacts" displayName="contacts">
+            <documentModel packageName="." nsName="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes" useInlineModel="true"/>
+            <resources>
+                <lookups/>
+                <mappings/>
+                <resource method="GET" path="/2.0/contact" type="SIMPLE" name="getfetchListContacts" displayName="fetchListContacts">
+                    <description>This action fetches a list of all contacts</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters>
+                        <parameter name="order_by" style="QUERYSTRING_PARAM" defaultValue="id" dataType="String"/>
+                        <parameter name="limit" style="QUERYSTRING_PARAM" defaultValue="500" dataType="String"/>
+                        <parameter name="offset" style="QUERYSTRING_PARAM" defaultValue="0" dataType="String"/>
+                    </parameters>
+                    <responses>
+                        <response name="response" code="200" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:contactsResponse" dimension="0"/>
+                        <response name="error" code="404,400,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:contactsError" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="GET" path="/2.0/contact/{contact_id}" type="SIMPLE" name="getcontact/{contact_id}" displayName="fetchContact">
+                    <description>This action fetches a single contact</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters>
+                        <parameter name="contact_id" isRequired="true" style="URI_CONTEXT" dataType="String"/>
+                    </parameters>
+                    <responses>
+                        <response name="response" code="200" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:get_fetchContact_response" dimension="0"/>
+                        <response name="error" code="404,400,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:get_fetchContact_error" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="POST" path="/2.0/contact/_bulk_create" type="SIMPLE" name="postcontact/_bulk_create" displayName="bulkCreateContacts">
+                    <description>This action creates multiple contacts in one request</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters/>
+                    <request name="post_bulkCreateContacts_request" messageFormatterType="application/json" builderType="application/octet+idataoref" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_bulkCreateContacts_request" excludeRoot="true" dimension="0"/>
+                    <responses>
+                        <response name="response" code="201" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_bulkCreateContacts_response" dimension="0"/>
+                        <response name="error" code="422,400,404,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_bulkCreateContacts_error" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="POST" path="/2.0/contact" type="SIMPLE" name="postcontact" displayName="createContact">
+                    <description>This action creates a new contact</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters/>
+                    <request name="post_createContact_request" messageFormatterType="application/json" builderType="application/octet+idataoref" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_createContact_request" excludeRoot="true" dimension="0"/>
+                    <responses>
+                        <response name="response" code="201" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_createContact_response" dimension="0"/>
+                        <response name="error" code="422,400,404,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_createContact_error" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="POST" path="/2.0/contact/{contact_id}" type="SIMPLE" name="postcontact/{contact_id}" displayName="editContact">
+                    <description>This action edits a single contact</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters>
+                        <parameter name="contact_id" isRequired="true" style="URI_CONTEXT" dataType="String"/>
+                    </parameters>
+                    <request name="post_editContact_request" messageFormatterType="application/json" builderType="application/octet+idataoref" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_editContact_request" excludeRoot="true" dimension="0"/>
+                    <responses>
+                        <response name="error" code="422,400,404,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_editContact_error" dimension="0"/>
+                        <response name="response" code="200" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_editContact_response" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="POST" path="/2.0/contact/search" type="SIMPLE" name="postcontact/search" displayName="searchContacts">
+                    <description>Search contacts via query.   The following search fields are supported:&#13;
+&#13;
+id&#13;
+name_1&#13;
+name_2&#13;
+nr&#13;
+address&#13;
+mail&#13;
+mail_second&#13;
+postcode&#13;
+city&#13;
+country_id&#13;
+contact_group_ids&#13;
+contact_type_id&#13;
+updated_at&#13;
+user_id&#13;
+phone_fixed&#13;
+phone_mobile&#13;
+fax</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters>
+                        <parameter name="order_by" style="QUERYSTRING_PARAM" defaultValue="id" dataType="String"/>
+                        <parameter name="limit" style="QUERYSTRING_PARAM" defaultValue="500" dataType="String"/>
+                        <parameter name="offset" style="QUERYSTRING_PARAM" defaultValue="0" dataType="String"/>
+                    </parameters>
+                    <request name="post_searchContacts_request" messageFormatterType="application/json" builderType="application/octet+idataoref" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_searchContacts_request" excludeRoot="true" dimension="0"/>
+                    <responses>
+                        <response name="response" code="200" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_searchContacts_response" dimension="0"/>
+                        <response name="error" code="422,400,404,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:post_searchContacts_error" dimension="0"/>
+                    </responses>
+                </resource>
+                <resource method="DELETE" path="/2.0/contact/{contact_id}" type="SIMPLE" name="deletedeleteContact" displayName="deleteContact">
+                    <description>This action deletes a contact</description>
+                    <mappings>
+                        <map isRequired="true" isFixed="true" context="IN" name="Accept">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Accept</target>
+                        </map>
+                        <map isRequired="true" isFixed="true" context="OUT" name="Content-Type">
+                            <source type="LITERAL">application/json</source>
+                            <target type="HEADER">Content-Type</target>
+                        </map>
+                    </mappings>
+                    <parameters>
+                        <parameter name="contact_id" isRequired="true" style="URI_CONTEXT" dataType="String"/>
+                    </parameters>
+                    <request name="stream" messageFormatterType="vnd.sag.cloudstreams+binary" builderType="vnd.sag.cloudstreams+binary" dimension="0"/>
+                    <responses>
+                        <response name="response" code="200" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:delete_deleteContact_response" dimension="0"/>
+                        <response name="error" code="400,404,401" messageFormatterType="application/octet+idataoref" builderType="application/json" documentRef="com.softwareag.cloudstreams.bexio.contacts_v1.contacts.doctypes:delete_deleteContact_error" dimension="0"/>
+                    </responses>
+                </resource>
+            </resources>
+        </service>
+    </services>
+</rest-connector>

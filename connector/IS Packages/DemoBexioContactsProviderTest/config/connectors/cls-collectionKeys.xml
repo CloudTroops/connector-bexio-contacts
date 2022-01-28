@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<services>
+    <cloudstreamsCollectionKeys serviceName="WmCloudStreams.RestVS">
+        <servicesKeys>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:bulkCreateContacts" connectorServiceName="DemoBexioContactsProviderTest.services:bulkCreateContacts"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:createContact" connectorServiceName="DemoBexioContactsProviderTest.services:createContact"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:deleteContact" connectorServiceName="DemoBexioContactsProviderTest.services:deleteContact"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:editContact" connectorServiceName="DemoBexioContactsProviderTest.services:editContact"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:fetchContact" connectorServiceName="DemoBexioContactsProviderTest.services:fetchContact"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:fetchListContacts" connectorServiceName="DemoBexioContactsProviderTest.services:fetchListContacts"/>
+            <keyDetails collectionKey="DemoBexioContactsProviderTest.services:searchContacts" connectorServiceName="DemoBexioContactsProviderTest.services:searchContacts"/>
+        </servicesKeys>
+    </cloudstreamsCollectionKeys>
+</services>
